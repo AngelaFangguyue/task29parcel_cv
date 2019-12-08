@@ -22,11 +22,12 @@ body{
 
 /*1>先画一个圆形的div*/
 div#taiji{
-    width:202px;
-    height:202px;
+    width:200px;
+    height:200px;
     border:1px solid black;
     border-radius:50%;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    border:none;
 }
 
 /*2>太极八卦分阴阳,左白右黑，使用背景渐变*/
