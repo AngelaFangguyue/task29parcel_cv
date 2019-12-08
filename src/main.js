@@ -22,8 +22,8 @@ body{
 
 /*1>先画一个圆形的div*/
 div#taiji{
-    width:200px;
-    height:200px;
+    width:202px;
+    height:202px;
     border:1px solid black;
     border-radius:50%;
 }
@@ -37,8 +37,8 @@ div#taiji{
 div#taiji::before{
     content:'';
     display:block;
-    width:99px;
-    height:99px;
+    width:100px;
+    height:100px;
     border:1px solid red;
     background:white;
     border-radius:50%;
@@ -51,8 +51,8 @@ div#taiji::before{
 div#taiji::after{
     content:'';
     display:block;
-    width:99px;
-    height:99px;
+    width:100px;
+    height:100px;
     border:1px solid red;
     background:black;
     border-radius:50%;
@@ -73,8 +73,8 @@ div#taiji::after{
 
 /*5>让太极动起来*/
 @keyframes rot{
-  from{transform:rotate(0);}
-  to{transform:rotate(360deg);}
+  from{transform: translate(-50%, -50%)rotate(0) ;}
+  to{transform:translate(-50%, -50%)rotate(360deg);}
 }
 div#taiji{
   animation: rot 1s infinite linear;
