@@ -70,6 +70,15 @@ div#taiji::before{
 div#taiji::after{
     background: radial-gradient(circle, rgba(255,255,255,1) 25%, rgba(0,0,0,1) 25%);
 }
+
+/*5>让太极动起来*/
+@keyframes rot{
+  from{transform:rotate(0);}
+  to{transform:rotate(360deg);}
+}
+div#taiji{
+  animation: rot 1s infinite linear;
+}
 `;
 let step = () => {
   setTimeout(() => {
