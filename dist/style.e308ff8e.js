@@ -117,47 +117,79 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-console.log("不要感慨时光匆匆，抓紧每一分每一秒才是关键！！！");
-var html = document.querySelector("#html");
-var taiji = document.querySelector("#taiji");
-var sty1 = document.querySelector("#sty1");
-var n = 0;
-var string2 = "";
-var string = "/*\u4F1A\u52A8\u7684\u4EE3\u7801:\u5199\u4E00\u4E2A\u4F1A\u52A8\u7684\u592A\u6781*/\n\n/*\u5F00\u59CB\u7B80\u5355\u52A0\u4E00\u4E0B\u6837\u5F0F*/\n\n/*\u5B57\u4F53\u53D8\u7EA2*/\nbody{\n    color:red;\n }\n\n/*\u5F00\u59CB\u753B\u592A\u6781\u5566\uFF01*/\n\n/*1>\u5148\u753B\u4E00\u4E2A\u5706\u5F62\u7684div*/\ndiv#taiji{\n    width:200px;\n    height:200px;\n    border:1px solid black;\n    border-radius:50%;\n}\n\n/*2>\u592A\u6781\u516B\u5366\u5206\u9634\u9633,\u5DE6\u767D\u53F3\u9ED1\uFF0C\u4F7F\u7528\u80CC\u666F\u6E10\u53D8*/\ndiv#taiji{\n    background:linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(0,0,0,1) 50%);\n}\n\n/*3>\u518D\u5229\u7528CSS\u4F2A\u5143\u7D20\u753B\u51FA\u592A\u6781\u7684\u9634\u9633\u9C7C*/\ndiv#taiji::before{\n    content:'';\n    display:block;\n    width:99px;\n    height:99px;\n    border:1px solid red;\n    background:white;\n    border-radius:50%;\n    position:absolute;\n    top:0;\n    left:50%;\n    transform:translateX(-50%);\n    border:none;\n}\ndiv#taiji::after{\n    content:'';\n    display:block;\n    width:99px;\n    height:99px;\n    border:1px solid red;\n    background:black;\n    border-radius:50%;\n    position:absolute;\n    bottom:0;\n    left:50%;\n    transform:translateX(-50%);\n    border:none;\n}\n\n/*4>\u540C\u7406\u4F7F\u7528\u6E10\u53D8\u6765\u4E3A\u9634\u9633\u9C7C\u52A0\u773C\u775B*/\ndiv#taiji::before{\n    background: radial-gradient(circle, rgba(0,0,0,1) 25%, rgba(255,255,255,1) 25%);\n}\ndiv#taiji::after{\n    background: radial-gradient(circle, rgba(255,255,255,1) 25%, rgba(0,0,0,1) 25%);\n}\n";
+})({"C:/Users/18234/AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-var step = function step() {
-  setTimeout(function () {
-    if (string[n] === "\n") {
-      string2 += "<br>";
-    } else if (string[n] === " ") {
-      string2 += "&nbsp;";
-    } else {
-      string2 += string[n];
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"C:/Users/18234/AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
     }
 
-    html.innerHTML = string2; //sty1.innerHTML = string2;//第一，style标签要放在script标签前面；第二：这样写，样式依然不起作用。不能在css代码里面写html代码
+    cssTimeout = null;
+  }, 50);
+}
 
-    sty1.innerHTML = string.substring(0, n + 1); //让页面自动往下滑动
+module.exports = reloadCSS;
+},{"./bundle-url":"C:/Users/18234/AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
 
-    window.scrollTo(0, 9999);
-    html.scrollTo(0, 9999);
-    n += 1;
-
-    if (n >= string.length) {
-      return;
-    }
-
-    step(); //这个step一定要写在return结束条件的后面，否则程序会一直执行！！！
-  }, 10);
-};
-
-step(); // console.log(string.length);
-// for (let y = 0; y <= string.length ; y++) {
-//   console.log(y, string.substring(0, y));
-// }//string.substring(0,string.length);这样才能把整个字符串输出
-//console.log(string.substring(0, 1));
-},{}],"C:/Users/18234/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"C:/Users/18234/AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js"}],"C:/Users/18234/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -360,5 +392,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["C:/Users/18234/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.1f19ae8e.js.map
+},{}]},{},["C:/Users/18234/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/style.e308ff8e.js.map
