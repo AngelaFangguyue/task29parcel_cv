@@ -26,6 +26,7 @@ div#taiji{
     height:202px;
     border:1px solid black;
     border-radius:50%;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 /*2>太极八卦分阴阳,左白右黑，使用背景渐变*/
